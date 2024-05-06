@@ -1,5 +1,6 @@
 package com.example.editmatch21.ui.theme.routes
 
+import com.example.editmatch21.ui.theme.entities.OrderDetailsEditor
 import com.example.editmatch21.ui.theme.entities.OrderEditor
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
 import com.example.editmatch21.ui.theme.entities.UsuarioRegister
@@ -8,6 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface Api {
     /*
@@ -25,5 +27,8 @@ interface Api {
     //ORDER
     @GET("orders/disponivel")
     suspend fun orders(): Response<List<OrderEditor>>
+
+    @GET("orders/{id}")
+    suspend fun orderDetail(@Path("id") id:Int): Response<OrderDetailsEditor>
 
 }

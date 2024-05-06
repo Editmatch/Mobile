@@ -14,13 +14,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.editmatch21.ui.theme.composables.CardToCarteira
 import com.example.editmatch21.ui.theme.composables.Header
 import com.example.editmatch21.ui.theme.composables.ProjectInfoField
 import com.example.editmatch21.ui.theme.composables.VideoFilePicker
+import com.example.editmatch21.ui.theme.viewmodels.OrderViewModel
 
 @Composable
 fun ProjectDetailsScreen(
@@ -30,8 +35,15 @@ fun ProjectDetailsScreen(
     navigateToProjects: () -> Unit,
     navigateToWorks: () -> Unit,
     navigateToCarteira: () -> Unit,
-    ) {
-    val navController = rememberNavController()
+) {
+    val viewModel: OrderViewModel = viewModel()
+    val orderDetail by viewModel.orderDetail.observeAsState()
+
+    // Chame a função para obter detalhes do pedido quando a tela for criada
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getOrderDetail(projectName.toInt())
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -57,10 +69,10 @@ fun ProjectDetailsScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Campos de informações do projeto
-            ProjectInfoField(label = "Nome do cliente", text = "Cliente XYZ")
-            ProjectInfoField(label = "Título", text = "Projeto ABC")
-            ProjectInfoField(label = "Descrição", text = "Descrição do projeto aqui...")
-            ProjectInfoField(label = "Skills", text = "Habilidade 1, Habilidade 2, Habilidade 3")
+            ProjectInfoField(label = "Nome do cliente", text = orderDetail?.nome ?: "Cliente XYZ")
+            ProjectInfoField(label = "Título", text = orderDetail?.title ?: "Projeto ABC")
+            ProjectInfoField(label = "Descrição", text = orderDetail?.desc ?: "Descrição do projeto aqui...")
+            ProjectInfoField(label = "Skills", text = orderDetail?.skills ?: "Habilidade 1, Habilidade 2, Habilidade 3")
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -69,7 +81,6 @@ fun ProjectDetailsScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Botão de download
                 Button(
                     onClick = { /* Lógica para download do projeto */ },
                     modifier = Modifier.weight(1f)
@@ -79,7 +90,6 @@ fun ProjectDetailsScreen(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Botão para pegar o projeto
                 Button(
                     onClick = { /* Lógica para pegar o projeto */ },
                     modifier = Modifier.weight(1f)
