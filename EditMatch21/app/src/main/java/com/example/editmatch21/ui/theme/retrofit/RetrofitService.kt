@@ -2,11 +2,11 @@ package com.example.editmatch21.ui.theme.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import sptech.projeto08c.Api
+import com.example.editmatch21.ui.theme.routes.Api
 
 object RetrofitService {
 
-    const val BASE_URL = "https://localhost:8080/api"
+    const val BASE_URL = "http://localhost:8080/api"
 
     fun get(): Api {
         val client =
