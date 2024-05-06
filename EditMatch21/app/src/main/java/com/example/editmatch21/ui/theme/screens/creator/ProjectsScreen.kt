@@ -1,4 +1,4 @@
-package com.example.editmatch21.ui.theme.screens.editor
+package com.example.editmatch21.ui.theme.screens.creator
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import com.example.editmatch21.ui.theme.composables.LinhaDivider
 import com.example.editmatch21.ui.theme.composables.CardToProject
 
 @Composable
-fun ProjectsScreen(
+fun ClientProjectsScreen(
     navigateToProfile: () -> Unit,
     navigateToLogin: () -> Unit,
     navigateToDetails: (Any?) -> Unit,

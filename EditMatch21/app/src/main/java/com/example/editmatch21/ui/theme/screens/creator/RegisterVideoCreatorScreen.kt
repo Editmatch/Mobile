@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,11 +19,40 @@ import com.example.editmatch21.ui.theme.composables.ButtonLoginCadastro
 import com.example.editmatch21.ui.theme.composables.InfoInput
 import com.example.editmatch21.ui.theme.composables.Redirecionamento
 import com.example.editmatch21.ui.theme.composables.TextoDescritivo
+import com.example.editmatch21.ui.theme.screens.editor.Editor
+import com.example.editmatch21.ui.theme.screens.editor.EditorViewModel
 
 @Composable
 fun RegisterVideoCreatorScreen(
     navigateToLogin: () -> Unit,
+    criadorViewModel: CriadorViewModel
 ) {
+    val nome = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val senha = remember { mutableStateOf("") }
+    val confirmarSenha = remember { mutableStateOf("") }
+
+    val editorCriado = criadorViewModel.criadorCriado.observeAsState()
+
+    // Função para lidar com o clique do botão de cadastro
+    val onClickCadastrar = {
+        // verificando se a senha é igual a do confirmar
+        if( senha.value == confirmarSenha.value){
+            // Aqui você pode obter os valores dos campos de entrada e criar um novo criador de vídeo
+            // Passar esses valores para a função criar do ViewModel
+            val novoCriador = Criador(
+                id = null,
+                nome = nome.value,
+                email = email.value,
+                password = senha.value
+            )
+            criadorViewModel.criar(novoCriador)
+            navigateToLogin()
+        } else{
+            // não faça nada
+        }
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -35,8 +67,8 @@ fun RegisterVideoCreatorScreen(
             TextoDescritivo(texto = "Cadastro de Criador de Vídeo")
 
             InfoInput(
-                value = "",
-                onValueChange = {},
+                value = nome.value,
+                onValueChange = {nome.value = it},
                 textoLabel = "Nome",
                 textoPlaceholder = "Edit Match"
             )
@@ -44,8 +76,8 @@ fun RegisterVideoCreatorScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             InfoInput(
-                value = "",
-                onValueChange = {},
+                value = email.value,
+                onValueChange = {email.value = it},
                 textoLabel = "E-mail",
                 textoPlaceholder = "exemplo@email.com"
             )
@@ -53,8 +85,8 @@ fun RegisterVideoCreatorScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             InfoInput(
-                value = "",
-                onValueChange = {},
+                value = senha.value,
+                onValueChange = {senha.value = it},
                 textoLabel = "Senha",
                 textoPlaceholder = "Digite a senha"
             )
@@ -62,8 +94,8 @@ fun RegisterVideoCreatorScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             InfoInput(
-                value = "",
-                onValueChange = {},
+                value = confirmarSenha.value,
+                onValueChange = {confirmarSenha.value = it},
                 textoLabel = "Confirmar sneha",
                 textoPlaceholder = "Digite a senha novamente"
             )
@@ -78,7 +110,7 @@ fun RegisterVideoCreatorScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            ButtonLoginCadastro(onClick = { navigateToLogin() }, texto = "Cadastrar")
+            ButtonLoginCadastro(onClick = { onClickCadastrar() }, texto = "Cadastrar")
         }
     }
 }

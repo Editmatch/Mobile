@@ -47,17 +47,16 @@ fun WorkScreen(
                 navigateToLogin = {navigateToLogin()},
                 navigateToProfile = {navigateToProfile()},
                 navigateToProjects = {navigateToProjects()},
-                navigateToWorks = {navigateToWorks()},
-                navigateToCarteira = {navigateToCarteira()}
-            )
+                navigateToWorks = {navigateToWorks()}
+            ) { navigateToCarteira() }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CardToProject("Memes do neymar", "2")
+            CardToProject(navController, "Memes do neymar", "2", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject("Streming GTA5","30")
+            CardToProject(navController, "Streming GTA5","30", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject("Maquiagem TikTok", "1")
+            CardToProject(navController, "Maquiagem TikTok", "1", navigateToDetails)
         }
     }
 }
