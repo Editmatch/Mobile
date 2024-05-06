@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiServiceCriador {
-    val BASE_URL = "http://52.6.25.134/api"
+    val BASE_URL = "http://52.6.25.134/api/"
 
     fun getCriadorService(): ApiCriador {
         val criador =

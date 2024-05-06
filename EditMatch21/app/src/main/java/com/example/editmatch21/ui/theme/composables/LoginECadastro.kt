@@ -46,7 +46,8 @@ fun InfoInput(
         value = value,
         onValueChange = onValueChange,
         label = { Text(textoLabel) },
-        placeholder = { Text(textoPlaceholder) }
+        placeholder = { Text(textoPlaceholder) },
+        textStyle = TextStyle(color = Color.Black)
     )
 }
 

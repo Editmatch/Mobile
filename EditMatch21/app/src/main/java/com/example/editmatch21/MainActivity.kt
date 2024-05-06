@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White
                 ) {
+                    val navController = rememberNavController()
                     AppNavigation()
                 }
             }
