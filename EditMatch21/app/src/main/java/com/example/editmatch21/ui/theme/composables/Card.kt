@@ -124,3 +124,42 @@ fun CardToCarteira() {
 
 }
 
+@Composable
+fun CardEditor(
+    navController: NavController,
+    videoName:String,
+    navigateToDetails: (String) -> Unit
+) {
+    Surface(
+        color = Color.White,
+        tonalElevation = 6.dp,
+        shape = RoundedCornerShape(8.dp), // Borda redonda com raio de 8.dp
+        modifier = Modifier
+            .size(width = 375.dp, height = 100.dp)
+            .padding(3.dp)
+            .clickable { navigateToDetails(videoName) }
+    ) {
+        Row {
+            Column {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_account_circle_24 ),
+                    contentDescription = "Video",
+                    modifier = Modifier.size(90.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Column {
+                Text(
+                    text = videoName,
+                    modifier = Modifier.padding(16.dp),
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+    }
+}
+
+
+
