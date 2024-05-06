@@ -1,3 +1,4 @@
+// ProjectDetailsScreen
 package com.example.editmatch21.ui.theme.screens.editor
 
 import androidx.compose.foundation.layout.Arrangement
@@ -20,8 +21,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
-import com.example.editmatch21.ui.theme.composables.CardToCarteira
 import com.example.editmatch21.ui.theme.composables.Header
 import com.example.editmatch21.ui.theme.composables.ProjectInfoField
 import com.example.editmatch21.ui.theme.composables.VideoFilePicker
@@ -39,8 +38,7 @@ fun ProjectDetailsScreen(
     val viewModel: OrderViewModel = viewModel()
     val orderDetail by viewModel.orderDetail.observeAsState()
 
-    // Chame a função para obter detalhes do pedido quando a tela for criada
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(key1 = projectName) {
         viewModel.getOrderDetail(projectName.toInt())
     }
 
@@ -63,12 +61,10 @@ fun ProjectDetailsScreen(
         Column(
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
-            // Componente para selecionar e exibir o arquivo de vídeo
             VideoFilePicker()
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campos de informações do projeto
             ProjectInfoField(label = "Nome do cliente", text = orderDetail?.nome ?: "Cliente XYZ")
             ProjectInfoField(label = "Título", text = orderDetail?.title ?: "Projeto ABC")
             ProjectInfoField(label = "Descrição", text = orderDetail?.desc ?: "Descrição do projeto aqui...")
@@ -76,7 +72,6 @@ fun ProjectDetailsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botões de ação
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
