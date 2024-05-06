@@ -11,14 +11,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.editmatch21.ui.theme.composables.Header
 import com.example.editmatch21.ui.theme.composables.LinhaDivider
 import com.example.editmatch21.ui.theme.composables.CardToProject
 import com.example.editmatch21.ui.theme.composables.HeaderToCreator
+import com.example.editmatch21.ui.theme.viewmodels.OrderViewModel
 
 @Composable
 fun ClientProjectsScreen(
@@ -27,6 +30,12 @@ fun ClientProjectsScreen(
     navigateToDetails: (Any?) -> Unit,
     navigateToSend: () -> Unit,
 ) {
+    val viewModel: OrderViewModel = viewModel()
+
+    viewModel.getOrders()
+
+    val orders by viewModel.orders.observeAsState(initial = emptyList())
+
     val navController = rememberNavController()
     Box(
         modifier = Modifier
@@ -46,26 +55,14 @@ fun ClientProjectsScreen(
                 navigateToProjects = { },
                 navigateToEditors = { navigateToEditors() },
                 navigateToSend = { navigateToSend() }
-
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CardToProject(navController, "Memes do neymar", navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Streming GTA5", navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Maquiagem TikTok",  navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Corte PDP", navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Trailer em português", navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Anúncio para o Instagram", navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Música", navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Música", navigateToDetails)
+            orders.forEach { order ->
+                CardToProject(navController, order.title, navigateToDetails)
+                LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+            }
         }
     }
 }

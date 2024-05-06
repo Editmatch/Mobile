@@ -1,9 +1,11 @@
 package com.example.editmatch21.ui.theme.routes
 
+import com.example.editmatch21.ui.theme.entities.OrderEditor
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
 import com.example.editmatch21.ui.theme.entities.UsuarioRegister
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -19,5 +21,9 @@ interface Api {
 
     @POST("usuarios/cadastro")
     suspend fun register(@Body login:UsuarioRegister): Response<UsuarioRegister>
+
+    //ORDER
+    @GET("orders/disponivel")
+    suspend fun orders(): Response<List<OrderEditor>>
 
 }
