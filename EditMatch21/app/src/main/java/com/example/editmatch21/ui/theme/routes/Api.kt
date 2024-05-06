@@ -14,10 +14,10 @@ interface Api {
     2 - O retorno das funções deve ser Response<???>
      */
     @Headers("Content-Type: application/json")
-    @POST("/usuarios/login")
+    @POST("usuarios/login")
     suspend fun post(@Body login:UsuarioLogin): Response<UsuarioLogin>
 
-    @POST("/usuarios/cadastro")
+    @POST("usuarios/cadastro")
     suspend fun register(@Body login:UsuarioRegister): Response<UsuarioRegister>
 
 }
