@@ -29,7 +29,6 @@ fun ProfileScreen(
     ) {
         Header(
             screenName = "Perfil",
-            modifier = Modifier,
             navigateToLogin = navigateToLogin,
             navigateToProfile = navigateToEditProfile,
             navigateToProjects = navigateToProjects,

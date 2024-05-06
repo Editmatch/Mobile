@@ -43,7 +43,6 @@ fun WorkScreen(
         ) {
             // Header
             Header("Lista de trabalhos",
-                modifier = Modifier,
                 navigateToLogin = {navigateToLogin()},
                 navigateToProfile = {navigateToProfile()},
                 navigateToProjects = {navigateToProjects()},

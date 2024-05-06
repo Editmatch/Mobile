@@ -15,6 +15,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +39,9 @@ fun LoginScreen(
     navigateToRegister: () -> Unit,
     navigateToProject: () -> Unit
 ) {
+    val email = remember { mutableStateOf("") }
+    val senha = remember { mutableStateOf("") }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -63,8 +68,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(1.dp))
 
             InfoInput(
-                value = "",
-                onValueChange = {},
+                value = email.value,
+                onValueChange = {email.value = it},
                 textoLabel = "E-mail",
                 textoPlaceholder = "exemplo@email.com"
             )
@@ -72,8 +77,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             InfoInput(
-                value = "",
-                onValueChange = {},
+                value = senha.value,
+                onValueChange = {senha.value = it},
                 textoLabel = "Senha",
                 textoPlaceholder = "Digite sua senha"
             )

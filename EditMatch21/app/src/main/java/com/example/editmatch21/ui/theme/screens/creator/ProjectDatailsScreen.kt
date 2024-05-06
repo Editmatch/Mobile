@@ -38,7 +38,6 @@ fun ProjectDetailsScreen(
     ) {
         Header(
             screenName = "Detalhes do projeto",
-            modifier = Modifier,
             navigateToLogin = navigateToLogin,
             navigateToProfile = navigateToEditProfile,
             navigateToProjects = navigateToProjects,

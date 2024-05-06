@@ -29,7 +29,6 @@ import com.example.editmatch21.R
 @Composable
 fun Header(
     screenName: String,
-    modifier: Modifier,
     navigateToLogin: () -> Unit,
     navigateToProfile: () -> Unit,
     navigateToProjects: () -> Unit,
@@ -37,7 +36,7 @@ fun Header(
     navigateToCarteira: () -> Unit
 
 ){
-    var expanded = remember { mutableStateOf(false) }
+    val expanded = remember { mutableStateOf(false) }
 
     Column {
         Row(
@@ -123,3 +122,92 @@ fun Header(
     }
 }
 
+
+@Composable
+fun HeaderToCreator(
+    screenName: String,
+    navigateToLogin: () -> Unit,
+    navigateToSend: () -> Unit,
+    navigateToProjects: () -> Unit,
+    navigateToEditors: () -> Unit
+){
+    val expanded = remember { mutableStateOf(false) }
+
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp) // Ajuste a altura conforme necessário
+                .background(Color.White),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = { expanded.value = true }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_menu_24),
+                    contentDescription = "menu"
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                text = screenName,
+                color = Color.Black,
+                fontSize = 25.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 1.dp)
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            IconButton(
+                onClick = { navigateToSend() }
+            ) {
+                Icon(painter = painterResource(id = R.drawable.baseline_add_circle_24), contentDescription = "publicar")
+            }
+
+            IconButton(
+                onClick = { navigateToLogin() }
+            ) {
+                Icon(painter = painterResource(id = R.drawable.baseline_exit_to_app_24), contentDescription = "Sair")
+            }
+        }
+
+        LinhaDivider(color = Color.Black, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+
+        if(expanded.value) {
+            Box(){
+                DropdownMenu(
+                    expanded = expanded.value,
+                    onDismissRequest = { expanded.value = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(text = "Projetos") },
+                        onClick = { navigateToProjects() },
+                        leadingIcon = { Icon(painter = painterResource(id = R.drawable.baseline_view_list_24), contentDescription = "Projetos " )}
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Editores") },
+                        onClick = { navigateToEditors() },
+                        leadingIcon = { Icon(painter = painterResource(id = R.drawable.baseline_work_history_24), contentDescription = "Meus trabalhos andamento")}
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Publicar Projeto") },
+                        onClick = { navigateToSend() },
+                        leadingIcon = {Icon(painter = painterResource(id = R.drawable.baseline_wallet_24), contentDescription = "Carteira")
+                        }
+                    )
+
+                    LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+                    DropdownMenuItem(
+                        text = { Text(text = "Sair") },
+                        onClick = { navigateToLogin() },
+                        leadingIcon = {Icon(painter = painterResource(id = R.drawable.baseline_exit_to_app_24), contentDescription = "Sair")
+                        }
+                    )
+                }
+            }
+        }
+    }
+}

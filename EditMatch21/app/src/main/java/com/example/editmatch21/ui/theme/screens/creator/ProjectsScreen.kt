@@ -18,14 +18,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.editmatch21.ui.theme.composables.Header
 import com.example.editmatch21.ui.theme.composables.LinhaDivider
 import com.example.editmatch21.ui.theme.composables.CardToProject
+import com.example.editmatch21.ui.theme.composables.HeaderToCreator
 
 @Composable
 fun ClientProjectsScreen(
-    navigateToProfile: () -> Unit,
+    navigateToEditors: () -> Unit,
     navigateToLogin: () -> Unit,
     navigateToDetails: (Any?) -> Unit,
-    navigateToWorks: () -> Unit,
-    navigateToCarteira: () -> Unit
+    navigateToSend: () -> Unit,
 ) {
     val navController = rememberNavController()
     Box(
@@ -41,13 +41,12 @@ fun ClientProjectsScreen(
                 .padding(16.dp)
         ) {
             // Header
-            Header("Projetos",
-                modifier = Modifier,
+            HeaderToCreator("Projetos",
                 navigateToLogin = {navigateToLogin()},
-                navigateToProfile = {navigateToProfile()},
                 navigateToProjects = { },
-                navigateToWorks = {navigateToWorks()},
-                navigateToCarteira = { navigateToCarteira() }
+                navigateToEditors = { navigateToEditors() },
+                navigateToSend = { navigateToSend() }
+
             )
 
             Spacer(modifier = Modifier.height(16.dp))

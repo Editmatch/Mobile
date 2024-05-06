@@ -42,7 +42,6 @@ fun ProjectsScreen(
         ) {
             // Header
             Header("Projetos",
-                modifier = Modifier,
                 navigateToLogin = {navigateToLogin()},
                 navigateToProfile = {navigateToProfile()},
                 navigateToProjects = { },

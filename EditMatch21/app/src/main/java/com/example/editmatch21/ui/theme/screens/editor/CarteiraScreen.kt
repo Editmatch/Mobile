@@ -38,7 +38,6 @@ fun Carteira(
     ) {
         Header(
             screenName = "Carteira",
-            modifier = Modifier,
             navigateToLogin = navigateToLogin,
             navigateToProfile = navigateToEditProfile,
             navigateToProjects = navigateToProjects,
