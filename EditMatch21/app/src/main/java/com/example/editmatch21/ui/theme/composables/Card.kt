@@ -40,7 +40,6 @@ fun CardEditor(
 fun CardToProject(
     navController: NavController,
     videoName:String,
-    duracao:String,
     navigateToDetails: (String) -> Unit
 ) {
     Surface(
@@ -69,17 +68,6 @@ fun CardToProject(
                     modifier = Modifier.padding(16.dp),
                     textAlign = TextAlign.Center,
                 )
-                Spacer(modifier = Modifier.weight(1f))
-
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = "Duração: "+duracao+"min",
-                        modifier = Modifier.padding(15.dp),
-                        fontSize = 12.sp,
-                        textAlign = TextAlign.End,
-                    )
-                }
-
             }
         }
     }

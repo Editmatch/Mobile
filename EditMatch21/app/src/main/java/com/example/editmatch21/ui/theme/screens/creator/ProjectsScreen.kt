@@ -52,21 +52,21 @@ fun ClientProjectsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CardToProject(navController, "Memes do neymar", "2", navigateToDetails)
+            CardToProject(navController, "Memes do neymar", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Streming GTA5","30", navigateToDetails)
+            CardToProject(navController, "Streming GTA5", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Maquiagem TikTok", "1", navigateToDetails)
+            CardToProject(navController, "Maquiagem TikTok",  navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Corte PDP", "4", navigateToDetails)
+            CardToProject(navController, "Corte PDP", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Trailer em português", "3", navigateToDetails)
+            CardToProject(navController, "Trailer em português", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Anúncio para o Instagram", "0.25", navigateToDetails)
+            CardToProject(navController, "Anúncio para o Instagram", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Música", "3.56", navigateToDetails)
+            CardToProject(navController, "Música", navigateToDetails)
             LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Música", "4.47", navigateToDetails)
+            CardToProject(navController, "Música", navigateToDetails)
         }
     }
 }
