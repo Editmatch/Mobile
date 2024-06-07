@@ -6,7 +6,7 @@ import com.example.editmatch21.ui.theme.routes.Api
 
 object RetrofitService {
 
-    const val BASE_URL = "http://52.6.25.134:80/api/"
+    const val BASE_URL = "https://editmatch.ddns.net/api/"
 
     fun get(): Api {
         val client =

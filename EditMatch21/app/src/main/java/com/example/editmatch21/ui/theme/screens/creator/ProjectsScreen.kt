@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,10 +26,10 @@ import com.example.editmatch21.ui.theme.viewmodels.OrderViewModel
 
 @Composable
 fun ClientProjectsScreen(
-    navigateToEditors: () -> Unit,
-    navigateToLogin: () -> Unit,
-    navigateToDetails: (Any?) -> Unit,
-    navigateToSend: () -> Unit,
+    navigateToEditors: () -> Unit = {},
+    navigateToLogin: () -> Unit = {},
+    navigateToDetails: (Any?) -> Unit = {},
+    navigateToSend: () -> Unit = {},
 ) {
     val viewModel: OrderViewModel = viewModel()
 
@@ -59,9 +60,13 @@ fun ClientProjectsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            orders.forEach { order ->
-                CardToProject(navController, order.title, navigateToDetails)
-                LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+            if (orders.isEmpty()) {
+                Text("Não há nenhum projeto cadastrado.")
+            } else {
+                orders.forEach { order ->
+                    CardToProject(navController, order.title, navigateToDetails)
+                    LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+                }
             }
         }
     }
