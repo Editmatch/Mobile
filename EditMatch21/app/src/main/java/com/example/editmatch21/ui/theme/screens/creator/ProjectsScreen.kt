@@ -26,10 +26,10 @@ import com.example.editmatch21.ui.theme.viewmodels.OrderViewModel
 
 @Composable
 fun ClientProjectsScreen(
-    navigateToEditors: () -> Unit = {},
-    navigateToLogin: () -> Unit = {},
-    navigateToDetails: (Any?) -> Unit = {},
-    navigateToSend: () -> Unit = {},
+    navigateToEditors: () -> Unit,
+    navigateToLogin: () -> Unit,
+    navigateToDetails: (Any?) -> Unit,
+    navigateToSend: () -> Unit,
 ) {
     val viewModel: OrderViewModel = viewModel()
 
