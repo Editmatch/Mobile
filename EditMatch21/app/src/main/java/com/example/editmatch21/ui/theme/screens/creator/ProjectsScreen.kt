@@ -61,10 +61,16 @@ fun ClientProjectsScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             if (orders.isNullOrEmpty()) {
-                Text("Não há nenhum projeto cadastrado.")
+                Text(
+                    text = "Nenhum projeto encontrado.",
+                    color = Color.Gray,
+                    modifier = Modifier.padding(8.dp)
+                )
             } else {
                 orders.forEach { order ->
-                    CardToProject(navController, order.title, navigateToDetails)
+                    // Verifica se o título do pedido é nulo
+                    val title = order.title ?: "Sem título"
+                    CardToProject(navController, title, navigateToDetails)
                     LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
                 }
             }
