@@ -60,7 +60,7 @@ fun ClientProjectsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (orders.isEmpty()) {
+            if (orders.isNullOrEmpty()) {
                 Text("Não há nenhum projeto cadastrado.")
             } else {
                 orders.forEach { order ->
