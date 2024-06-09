@@ -18,31 +18,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.editmatch21.ui.theme.composables.Header
+import com.example.editmatch21.ui.theme.composables.HeaderToCreator
 import com.example.editmatch21.ui.theme.composables.ProjectInfoField
 import com.example.editmatch21.ui.theme.composables.VideoFilePicker
-
 @Composable
 fun SendProjectScreen(
-    projectName: String,
-    navigateToEditProfile: () -> Unit,
-    navigateToLogin:() -> Unit,
+    screenName: String,
+    navigateToLogin: () -> Unit,
+    navigateToSend: () -> Unit,
     navigateToProjects: () -> Unit,
-    navigateToWorks: () -> Unit,
-    navigateToCarteira: () -> Unit,
+    navigateToEditors: () -> Unit
 ) {
-    val navController = rememberNavController()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Header(
+        HeaderToCreator(
             screenName = "Publicar Projeto",
             navigateToLogin = navigateToLogin,
-            navigateToProfile = navigateToEditProfile,
+            navigateToSend = navigateToSend,
             navigateToProjects = navigateToProjects,
-            navigateToWorks = navigateToWorks,
-            navigateToCarteira = navigateToCarteira
+            navigateToEditors =  navigateToEditors,
         )
 
         Spacer(modifier = Modifier.height(26.dp))
@@ -50,12 +47,10 @@ fun SendProjectScreen(
         Column(
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
-            // Componente para selecionar e exibir o arquivo de vídeo
             VideoFilePicker()
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campos de informações do projeto
             ProjectInfoField(label = "Nome do cliente", text = "Cliente XYZ")
             ProjectInfoField(label = "Título", text = "Projeto ABC")
             ProjectInfoField(label = "Descrição", text = "Descrição do projeto aqui...")
@@ -63,12 +58,10 @@ fun SendProjectScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botões de ação
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Botão de download
                 Button(
                     onClick = { /* Lógica para download do projeto */ },
                     modifier = Modifier.weight(1f)
@@ -78,9 +71,8 @@ fun SendProjectScreen(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Botão para pegar o projeto
                 Button(
-                    onClick = { /* Lógica para pegar o projeto */ },
+                    onClick = { /* Lógica para publicar o projeto */ },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(text = "Publicar")

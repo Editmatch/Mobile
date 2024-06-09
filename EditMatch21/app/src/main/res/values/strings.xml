@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Edit Match 2.1</string>
+    <string name="login_text_title">Faça o login na sua conta</string>
+    <string name="login_text_email">E-mail</string>
+    <string name="login_text_email_placeholder">example@mail.com</string>
+    <string name="login_text_password">Senha</string>
+    <string name="login_text_password_placeholder">Senha</string>
+    <string name="login_text_quest">"Não possui conta?"</string>
+    <string name="login_text_redirect">Cadastre-se</string>
+    <string name="login_text_button">Entrar</string>
+
+    <string name="register_text_title">Cadastre-se</string>
+    <string name="register_text_input_name">Nome</string>
+    <string name="register_text_input_name_placeholder">Nome</string>
+    <string name="register_text_input_email">Email</string>
+    <string name="register_text_input_email_placeholder">example@mail.com</string>
+    <string name="register_text_input_password">Senha</string>
+    <string name="register_text_input_password_placeholder">Senha</string>
+    <string name="register_text_input_confirm_password">Senha</string>
+    <string name="register_text_input_confirm_password_placeholder">Senha</string>
+    <string name="register_text_quest">Já possui conta?</string>
+    <string name="register_text_redirect">Faça login</string>
+    <string name="register_text_button">Cadastrar</string>
+
+
+    <string name="projects_text_title">Projetos</string>
+    <string name="projectsDetail_text_title">Detalhes do projeto</string>
 </resources>

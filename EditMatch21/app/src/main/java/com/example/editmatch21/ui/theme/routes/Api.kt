@@ -24,6 +24,8 @@ interface Api {
     @POST("usuarios/cadastro")
     suspend fun register(@Body login:UsuarioRegister): Response<UsuarioRegister>
 
+    @GET("/usuarios/listar-editores")
+
     //ORDER
     @GET("orders/disponivel")
     suspend fun orders(): Response<List<OrderEditor>>

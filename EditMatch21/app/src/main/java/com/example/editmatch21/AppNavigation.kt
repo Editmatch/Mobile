@@ -12,7 +12,9 @@ import com.example.editmatch21.ui.theme.screens.LoginScreen
 import com.example.editmatch21.ui.theme.screens.RegisterSelectScreen
 import com.example.editmatch21.ui.theme.screens.creator.ClientProjectsScreen
 import com.example.editmatch21.ui.theme.screens.creator.CriadorViewModel
+import com.example.editmatch21.ui.theme.screens.creator.EditorsScreen
 import com.example.editmatch21.ui.theme.screens.creator.RegisterVideoCreatorScreen
+import com.example.editmatch21.ui.theme.screens.creator.SendProjectScreen
 import com.example.editmatch21.ui.theme.screens.editor.Carteira
 import com.example.editmatch21.ui.theme.screens.editor.EditorViewModel
 import com.example.editmatch21.ui.theme.screens.editor.ProfileScreen
@@ -74,13 +76,25 @@ fun AppNavigation(){
 
         composable("projects") {
             ClientProjectsScreen(
-                navigateToEditors = { navController.navigate("")},
+                navigateToEditors = { navController.navigate("editores")},
                 navigateToLogin = { navController.navigate("login") },
-                navigateToSend = { navController.navigate("") },
+                navigateToSend = { navController.navigate("sendProject") },
                 navigateToDetails = { projectName ->
                     navController.navigate("projectdetails/$projectName")
                 }
             )
+        }
+
+        composable(
+            "sendProject"
+        ){
+            SendProjectScreen(
+                projectName = "blabla",
+                navigateToEditProfile = { navController.navigate("profile") },
+                navigateToLogin = { navController.navigate("login") },
+                navigateToProjects = { navController.navigate("projects") },
+                navigateToWorks = { /*TODO*/ }) {
+            }
         }
 
         composable(
@@ -117,6 +131,15 @@ fun AppNavigation(){
                 navigateToProjects = {navController.navigate("projects")},
                 navigateToWorks = {navController.navigate("works")},
                 navigateToCarteira = {navController.navigate("carteira")}
+            )
+        }
+
+        composable("editores"){
+            EditorsScreen(
+                navigateToEditors = { navController.navigate("editores") },
+                navigateToDetails = {},
+                navigateToLogin = {navController.navigate("login")},
+                navigateToSend = {navController.navigate("sendProject")},
             )
         }
 
