@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.editmatch21.ui.theme.screens.LoginScreen
 import com.example.editmatch21.ui.theme.screens.RegisterSelectScreen
+import com.example.editmatch21.ui.theme.screens.creator.ClientProjectsScreen
 import com.example.editmatch21.ui.theme.screens.creator.CriadorViewModel
 import com.example.editmatch21.ui.theme.screens.creator.RegisterVideoCreatorScreen
 import com.example.editmatch21.ui.theme.screens.editor.Carteira
@@ -72,11 +73,10 @@ fun AppNavigation(){
         }
 
         composable("projects") {
-            ProjectsScreen(
-                navigateToProfile = { navController.navigate("profile") },
+            ClientProjectsScreen(
+                navigateToEditors = { navController.navigate("")},
                 navigateToLogin = { navController.navigate("login") },
-                navigateToWorks = {navController.navigate("works")},
-                navigateToCarteira = {navController.navigate("carteira")},
+                navigateToSend = { navController.navigate("") },
                 navigateToDetails = { projectName ->
                     navController.navigate("projectdetails/$projectName")
                 }

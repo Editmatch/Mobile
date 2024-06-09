@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -59,9 +60,19 @@ fun ClientProjectsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            orders.forEach { order ->
-                CardToProject(navController, order.title, navigateToDetails)
-                LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+            if (orders.isNullOrEmpty()) {
+                Text(
+                    text = "Nenhum projeto encontrado.",
+                    color = Color.Gray,
+                    modifier = Modifier.padding(8.dp)
+                )
+            } else {
+                orders.forEach { order ->
+                    // Verifica se o título do pedido é nulo
+                    val title = order.title ?: "Sem título"
+                    CardToProject(navController, title, navigateToDetails)
+                    LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+                }
             }
         }
     }
