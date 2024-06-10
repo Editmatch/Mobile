@@ -19,8 +19,6 @@ import com.example.editmatch21.ui.theme.composables.ButtonLoginCadastro
 import com.example.editmatch21.ui.theme.composables.InfoInput
 import com.example.editmatch21.ui.theme.composables.Redirecionamento
 import com.example.editmatch21.ui.theme.composables.TextoDescritivo
-import com.example.editmatch21.ui.theme.screens.editor.Editor
-import com.example.editmatch21.ui.theme.screens.editor.EditorViewModel
 
 @Composable
 fun RegisterVideoCreatorScreen(

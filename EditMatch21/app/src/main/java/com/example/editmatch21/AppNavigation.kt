@@ -2,7 +2,6 @@ package com.example.editmatch21
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,15 +10,12 @@ import androidx.navigation.navArgument
 import com.example.editmatch21.ui.theme.screens.LoginScreen
 import com.example.editmatch21.ui.theme.screens.RegisterSelectScreen
 import com.example.editmatch21.ui.theme.screens.creator.ClientProjectsScreen
-import com.example.editmatch21.ui.theme.screens.creator.CriadorViewModel
 import com.example.editmatch21.ui.theme.screens.creator.EditorsScreen
 import com.example.editmatch21.ui.theme.screens.creator.RegisterVideoCreatorScreen
 import com.example.editmatch21.ui.theme.screens.creator.SendProjectScreen
 import com.example.editmatch21.ui.theme.screens.editor.Carteira
-import com.example.editmatch21.ui.theme.screens.editor.EditorViewModel
 import com.example.editmatch21.ui.theme.screens.editor.ProfileScreen
 import com.example.editmatch21.ui.theme.screens.editor.ProjectDetailsScreen
-import com.example.editmatch21.ui.theme.screens.editor.ProjectsScreen
 import com.example.editmatch21.ui.theme.screens.editor.RegisterVideoEditorScreen
 import com.example.editmatch21.ui.theme.screens.editor.WorkScreen
 
