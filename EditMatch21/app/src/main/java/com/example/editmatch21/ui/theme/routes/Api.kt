@@ -1,10 +1,11 @@
 package com.example.editmatch21.ui.theme.routes
 
+import com.example.editmatch21.ui.theme.entities.ClientRegister
+import com.example.editmatch21.ui.theme.entities.EditorRegister
 import com.example.editmatch21.ui.theme.entities.Editores
 import com.example.editmatch21.ui.theme.entities.OrderDetailsEditor
 import com.example.editmatch21.ui.theme.entities.OrderEditor
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
-import com.example.editmatch21.ui.theme.entities.UsuarioRegister
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -16,11 +17,16 @@ interface Api {
     @POST("usuarios/login")
     suspend fun post(@Body login: UsuarioLogin): Response<UsuarioLogin>
 
-    @POST("usuarios/cadastro")
-    suspend fun register(@Body login: UsuarioRegister): Response<UsuarioRegister>
-
     @GET("usuarios/listar-editor")
     suspend fun listarEditores(): Response<List<Editores>>
+
+    @Headers("Content-Type: application/json")
+    @POST("editores")
+    suspend fun registerEditor(@Body editor: EditorRegister): Response<EditorRegister>
+
+    @Headers("Content-Type: application/json")
+    @POST("clientes")
+    suspend fun registerClient(@Body client: ClientRegister): Response<ClientRegister>
 
     @Multipart
     @POST("s3/storage")

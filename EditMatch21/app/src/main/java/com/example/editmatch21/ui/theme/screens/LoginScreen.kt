@@ -1,6 +1,7 @@
 package com.example.editmatch21.ui.theme.screens
 
 import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.editmatch21.R
@@ -29,6 +34,24 @@ import com.example.editmatch21.ui.theme.composables.Redirecionamento
 import com.example.editmatch21.ui.theme.composables.TextoDescritivo
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
 import com.example.editmatch21.ui.theme.viewmodels.UsuarioViewModel
+
+@Composable
+fun InfoInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    textoLabel: String,
+    textoPlaceholder: String,
+    visualTransformation: VisualTransformation
+) {
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(textoLabel) },
+        placeholder = { Text(textoPlaceholder) },
+        visualTransformation = visualTransformation,
+        modifier = Modifier.background(color = Color.White)
+    )
+}
 
 @Composable
 fun LoginScreen(
@@ -74,9 +97,10 @@ fun LoginScreen(
 
             InfoInput(
                 value = senha,
-                onValueChange = { senha = it },
+                onValueChange = {senha = it},
                 textoLabel = "Senha",
-                textoPlaceholder = "Digite sua senha"
+                textoPlaceholder = "Senha*",
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -89,14 +113,20 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            val loginSuccessful = viewModel.loginResult.observeAsState(initial = false)
+            val loginSuccessful = viewModel.loginResult.observeAsState()
             val userId = viewModel.userId.observeAsState()
 
             ButtonLoginCadastro(onClick = {
                 viewModel.login(UsuarioLogin(email, senha))
             }, texto = "Entrar")
 
-            if (loginSuccessful.value) {
+            if(loginSuccessful.value == true) {
+                Text(text = "Login realizado com sucesso!")
+            }else if(loginSuccessful.value == false) {
+                Text(text = "Erro ao realizar login")
+            }
+
+            if (loginSuccessful.value == true) {
                 userId.value?.let {
                     val context = LocalContext.current
                     val sharedPref = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
