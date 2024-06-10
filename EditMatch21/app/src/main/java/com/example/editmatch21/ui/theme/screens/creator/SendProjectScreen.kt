@@ -25,7 +25,6 @@ import com.example.editmatch21.ui.theme.viewmodels.UploadViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
-
 @Composable
 fun SendProjectScreen(
     screenName: String,
@@ -41,7 +40,6 @@ fun SendProjectScreen(
     var skillsProjeto by remember { mutableStateOf("") }
     var videoUri by remember { mutableStateOf<Uri?>(null) }
     var videoLink by remember { mutableStateOf("") }
-    var logMessages by remember { mutableStateOf(listOf<String>()) }
 
     // Recupera o ID do usuário dos SharedPreferences
     val sharedPref = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -54,31 +52,32 @@ fun SendProjectScreen(
         uri?.let {
             val file = getFileFromUri(context, uri)
             if (file != null && file.exists()) {
-                val logMessage = "Vídeo selecionado: ${file.path}"
-                logMessages = logMessages + logMessage
-                Log.d("SendProjectScreen", logMessage)
                 viewModel.uploadVideo(tituloProjeto, uri, file)
-            } else {
-                val logMessage = "Erro: arquivo não existe."
-                logMessages = logMessages + logMessage
-                Log.e("SendProjectScreen", logMessage)
             }
         }
     }
 
     val uploadStatus by viewModel.uploadStatus.observeAsState()
     val uploadError by viewModel.uploadError.observeAsState()
+    val projectStatus by viewModel.projectStatus.observeAsState()
 
     LaunchedEffect(uploadStatus) {
         uploadStatus?.let {
-            logMessages = logMessages + it
             videoLink = it
         }
     }
 
     LaunchedEffect(uploadError) {
         uploadError?.let {
-            logMessages = logMessages + it
+            // Você pode adicionar um mecanismo de notificação de erro aqui, se desejar.
+        }
+    }
+
+    LaunchedEffect(projectStatus) {
+        projectStatus?.let {
+            if (it == "Projeto enviado com sucesso") {
+                navigateToProjects()
+            }
         }
     }
 
@@ -131,20 +130,11 @@ fun SendProjectScreen(
 
             Button(
                 onClick = {
-                    val logMessage = "Botão 'Publicar' clicado"
-                    logMessages = logMessages + logMessage
-                    Log.d("SendProjectScreen", logMessage)
                     if (videoLink.isNotEmpty() && userId != null) {
                         val skillsList = skillsProjeto.split(",").map { it.trim() }
-                        val sendLogMessage = "Enviando projeto: $tituloProjeto, $descricaoProjeto, $skillsList, $videoLink"
-                        logMessages = logMessages + sendLogMessage
-                        Log.d("SendProjectScreen", sendLogMessage)
                         viewModel.sendProjectData(userId, tituloProjeto, descricaoProjeto, skillsList, videoLink)
                     } else {
-                        val errorLogMessage = "Erro: Video link ou User ID está vazio."
-                        logMessages = logMessages + errorLogMessage
-                        viewModel.updateUploadError(errorLogMessage)
-                        Log.e("SendProjectScreen", errorLogMessage)
+                        viewModel.updateUploadError("Erro: Video link ou User ID está vazio.")
                     }
                 },
                 modifier = Modifier.fillMaxWidth(0.5f)
@@ -156,9 +146,6 @@ fun SendProjectScreen(
 
             Button(
                 onClick = {
-                    val logMessage = "Botão 'Selecionar Vídeo' clicado"
-                    logMessages = logMessages + logMessage
-                    Log.d("SendProjectScreen", logMessage)
                     videoPickerLauncher.launch("video/*")
                 },
                 modifier = Modifier.fillMaxWidth(0.5f)
@@ -180,13 +167,6 @@ fun SendProjectScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            Column {
-                Text("Logs:")
-                logMessages.forEach { logMessage ->
-                    Text(text = logMessage)
-                }
-            }
         }
     }
 }
