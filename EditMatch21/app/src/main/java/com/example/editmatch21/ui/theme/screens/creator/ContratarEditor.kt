@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,14 +26,15 @@ import com.example.editmatch21.ui.theme.composables.HeaderToCreator
 import com.example.editmatch21.ui.theme.viewmodels.UploadViewModel
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
+
 @Composable
-fun SendProjectScreen(
+fun ContratarEditor(
     screenName: String,
     navigateToLogin: () -> Unit,
     navigateToSend: () -> Unit,
     navigateToProjects: () -> Unit,
-    navigateToEditors: () -> Unit
+    navigateToEditors: () -> Unit,
+    navigateToHirePage: () -> Unit
 ) {
     val viewModel: UploadViewModel = viewModel()
     val context = LocalContext.current
@@ -41,7 +44,6 @@ fun SendProjectScreen(
     var videoUri by remember { mutableStateOf<Uri?>(null) }
     var videoLink by remember { mutableStateOf("") }
 
-    // Recupera o ID do usuário dos SharedPreferences
     val sharedPref = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
     val userId = sharedPref.getString("user_id", null)
 
@@ -69,7 +71,6 @@ fun SendProjectScreen(
 
     LaunchedEffect(uploadError) {
         uploadError?.let {
-            // Você pode adicionar um mecanismo de notificação de erro aqui, se desejar.
         }
     }
 
@@ -87,14 +88,14 @@ fun SendProjectScreen(
             .padding(16.dp)
     ) {
         HeaderToCreator(
-            screenName = "Publicar Projeto",
+            screenName = "Contratar editor",
             navigateToLogin = navigateToLogin,
             navigateToSend = navigateToSend,
             navigateToProjects = navigateToProjects,
             navigateToEditors = navigateToEditors,
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Column(
             modifier = Modifier
@@ -130,22 +131,6 @@ fun SendProjectScreen(
 
             Button(
                 onClick = {
-                    if (videoLink.isNotEmpty() && userId != null) {
-                        val skillsList = skillsProjeto.split(",").map { it.trim() }
-                        viewModel.sendProjectData(userId, tituloProjeto, descricaoProjeto, skillsList, videoLink)
-                    } else {
-                        viewModel.updateUploadError("Erro: Video link ou User ID está vazio.")
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(0.5f)
-            ) {
-                Text(text = "Publicar")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = {
                     videoPickerLauncher.launch("video/*")
                 },
                 modifier = Modifier.fillMaxWidth(0.5f)
@@ -167,36 +152,22 @@ fun SendProjectScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-        }
-    }
-}
 
-fun getFileFromUri(context: Context, uri: Uri): File? {
-    val contentResolver = context.contentResolver
-    val fileName = getFileName(contentResolver, uri)
-    val file = File(context.cacheDir, fileName)
-    try {
-        val inputStream = contentResolver.openInputStream(uri) ?: return null
-        val outputStream = FileOutputStream(file)
-        inputStream.use { input ->
-            outputStream.use { output ->
-                input.copyTo(output)
+            Button(
+                onClick = {
+                    if (videoLink.isNotEmpty() && userId != null) {
+                        val skillsList = skillsProjeto.split(",").map { it.trim() }
+                        viewModel.sendProjectData(userId, tituloProjeto, descricaoProjeto, skillsList, videoLink)
+                    } else {
+                        viewModel.updateUploadError("Erro: Video link ou User ID está vazio.")
+                    }
+                    navigateToProjects()
+                },
+                modifier = Modifier.fillMaxWidth(0.5f)
+            ) {
+                Text(text = "Contratar")
             }
         }
-        return file
-    } catch (e: Exception) {
-        Log.e("SendProjectScreen", "Erro ao converter URI para arquivo: ${e.message}")
-        return null
     }
 }
 
-fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
-    var name = ""
-    val returnCursor = contentResolver.query(uri, null, null, null, null)
-    returnCursor?.use {
-        val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-        it.moveToFirst()
-        name = it.getString(nameIndex)
-    }
-    return name
-}

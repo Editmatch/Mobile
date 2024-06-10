@@ -6,43 +6,53 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.editmatch21.ui.theme.composables.Header
+import com.example.editmatch21.ui.theme.composables.HeaderToCreator
 import com.example.editmatch21.ui.theme.composables.PortifolioProfile
 import com.example.editmatch21.ui.theme.composables.ProfileHeader
+import com.example.editmatch21.ui.theme.viewmodels.EditoresViewModel
 
 @Composable
-fun ProfileScreen(
-    navigateToEditProfile: () -> Unit,
-    navigateToLogin:() -> Unit,
+fun ProfileEditorScreen(
+    editorId: Int,
+    navigateToLogin: () -> Unit,
     navigateToProjects: () -> Unit,
-    navigateToWorks: () -> Unit,
-    navigateToCarteira: () -> Unit
+    navigateToEditors: () -> Unit,
+    navigateToSend: () -> Unit,
+    navigateToHirePage: () -> Unit
 ) {
-    val navController = rememberNavController()
+    val viewModel: EditoresViewModel = viewModel()
+
+    androidx.compose.runtime.LaunchedEffect(editorId) {
+        viewModel.getEditorById(editorId)
+    }
+
+    val editor by viewModel.editor.observeAsState();
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Header(
+        HeaderToCreator(
             screenName = "Perfil",
             navigateToLogin = navigateToLogin,
-            navigateToProfile = navigateToEditProfile,
             navigateToProjects = navigateToProjects,
-            navigateToWorks = navigateToWorks,
-            navigateToCarteira = navigateToCarteira
+            navigateToEditors = navigateToEditors,
+            navigateToSend = navigateToSend
         )
 
         Spacer(modifier = Modifier.height(26.dp))
 
-        ProfileHeader(navigateToEditProfile)
-
         Spacer(modifier = Modifier.height(16.dp))
 
-        PortifolioProfile()
+        editor?.let { PortifolioProfile(it, navigateToHirePage) }
     }
 }
 

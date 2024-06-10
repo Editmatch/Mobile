@@ -8,6 +8,7 @@ import com.example.editmatch21.ui.theme.entities.OrderEditor
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -32,11 +33,14 @@ interface Api {
     suspend fun uploadVideo(
         @Part file: MultipartBody.Part,
         @Part("title") title: RequestBody
-    ): Response<UploadResponse>
+    ): Response<ResponseBody>
 
 
     @POST("orders")
     suspend fun sendProjectData(@Body data: ProjectData): Response<Void>
+
+    @GET("editores/{id}")
+    suspend fun editorDetail(@Path("id") id: Int): Response<Editores>
 
     @GET("orders/disponivel")
     suspend fun orders(): Response<List<OrderEditor>>

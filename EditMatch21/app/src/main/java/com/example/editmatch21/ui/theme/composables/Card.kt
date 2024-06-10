@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,14 +33,14 @@ import com.example.editmatch21.R
 @Composable
 fun CardEditor(
 
-){
+) {
 
 }
 
 @Composable
 fun CardToProject(
     navController: NavController,
-    videoName:String,
+    videoName: String,
     navigateToDetails: (String) -> Unit
 ) {
     Surface(
@@ -78,7 +79,7 @@ fun CardToCarteira() {
     Box(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         Surface(
             color = Color.White,
             tonalElevation = 6.dp,
@@ -98,19 +99,19 @@ fun CardToCarteira() {
                     modifier = Modifier.fillMaxWidth(), // Para garantir que a Column ocupe a largura máxima
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(1.dp)
-                    ) {
+                ) {
 
                     Text(
                         text = "Saldo atual:",
                         modifier = Modifier.padding(3.dp),
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Medium,
-                        color = Color(80,80,80),
+                        color = Color(80, 80, 80),
                         fontSize = 19.sp
                     )
 
                     Text(
-                        text = "R$ " + "1500.0034,00" , // o numero será substituido pelo valor do banco de dados
+                        text = "R$ " + "1500.0034,00", // o numero será substituido pelo valor do banco de dados
                         modifier = Modifier.padding(15.dp),
                         fontSize = 29.sp,
                         textAlign = TextAlign.Center,
@@ -127,37 +128,19 @@ fun CardToCarteira() {
 @Composable
 fun CardEditor(
     navController: NavController,
-    videoName:String,
-    navigateToDetails: (String) -> Unit
+    editorId: Int,
+    editorName: String,
+    navigateToProfileEditorScreen: (Int) -> Unit
 ) {
-    Surface(
-        color = Color.White,
-        tonalElevation = 6.dp,
-        shape = RoundedCornerShape(8.dp),
+    Card(
         modifier = Modifier
-            .size(width = 375.dp, height = 100.dp)
-            .padding(3.dp)
-            .clickable { navigateToDetails(videoName) }
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable {
+                navigateToProfileEditorScreen(editorId)
+            }
     ) {
-        Row {
-            Column {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_account_circle_24 ),
-                    contentDescription = "Video",
-                    modifier = Modifier.size(90.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Column {
-                Text(
-                    text = videoName,
-                    modifier = Modifier.padding(16.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
-        }
+        Text(text = editorName)
     }
 }
 
