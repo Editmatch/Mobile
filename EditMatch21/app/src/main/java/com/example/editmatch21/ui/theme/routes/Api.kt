@@ -6,6 +6,7 @@ import com.example.editmatch21.ui.theme.entities.OrderEditor
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
 import com.example.editmatch21.ui.theme.entities.UsuarioRegister
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -22,7 +23,11 @@ interface Api {
 
     @Multipart
     @POST("s3/storage")
-    suspend fun uploadVideo(@Part file: MultipartBody.Part): Response<UploadResponse>
+    suspend fun uploadVideo(
+        @Part file: MultipartBody.Part,
+        @Part("title") title: RequestBody
+    ): Response<UploadResponse>
+
 
     @POST("orders")
     suspend fun sendProjectData(@Body data: ProjectData): Response<Void>

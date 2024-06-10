@@ -1,7 +1,10 @@
 package com.example.editmatch21.ui.theme.screens.creator
 
+import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.provider.OpenableColumns
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -20,6 +23,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.editmatch21.ui.theme.composables.HeaderToCreator
 import com.example.editmatch21.ui.theme.viewmodels.UploadViewModel
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 @Composable
 fun SendProjectScreen(
@@ -36,6 +41,7 @@ fun SendProjectScreen(
     var skillsProjeto by remember { mutableStateOf("") }
     var videoUri by remember { mutableStateOf<Uri?>(null) }
     var videoLink by remember { mutableStateOf("") }
+    var logMessages by remember { mutableStateOf(listOf<String>()) }
 
     // Recupera o ID do usuário dos SharedPreferences
     val sharedPref = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -46,13 +52,35 @@ fun SendProjectScreen(
     ) { uri: Uri? ->
         videoUri = uri
         uri?.let {
-            val file = File(uri.path)
-            viewModel.uploadVideo(uri, file)
+            val file = getFileFromUri(context, uri)
+            if (file != null && file.exists()) {
+                val logMessage = "Vídeo selecionado: ${file.path}"
+                logMessages = logMessages + logMessage
+                Log.d("SendProjectScreen", logMessage)
+                viewModel.uploadVideo(tituloProjeto, uri, file)
+            } else {
+                val logMessage = "Erro: arquivo não existe."
+                logMessages = logMessages + logMessage
+                Log.e("SendProjectScreen", logMessage)
+            }
         }
     }
 
     val uploadStatus by viewModel.uploadStatus.observeAsState()
     val uploadError by viewModel.uploadError.observeAsState()
+
+    LaunchedEffect(uploadStatus) {
+        uploadStatus?.let {
+            logMessages = logMessages + it
+            videoLink = it
+        }
+    }
+
+    LaunchedEffect(uploadError) {
+        uploadError?.let {
+            logMessages = logMessages + it
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -103,11 +131,20 @@ fun SendProjectScreen(
 
             Button(
                 onClick = {
+                    val logMessage = "Botão 'Publicar' clicado"
+                    logMessages = logMessages + logMessage
+                    Log.d("SendProjectScreen", logMessage)
                     if (videoLink.isNotEmpty() && userId != null) {
                         val skillsList = skillsProjeto.split(",").map { it.trim() }
+                        val sendLogMessage = "Enviando projeto: $tituloProjeto, $descricaoProjeto, $skillsList, $videoLink"
+                        logMessages = logMessages + sendLogMessage
+                        Log.d("SendProjectScreen", sendLogMessage)
                         viewModel.sendProjectData(userId, tituloProjeto, descricaoProjeto, skillsList, videoLink)
                     } else {
-                        viewModel.updateUploadError("Video link ou User ID está vazio.")
+                        val errorLogMessage = "Erro: Video link ou User ID está vazio."
+                        logMessages = logMessages + errorLogMessage
+                        viewModel.updateUploadError(errorLogMessage)
+                        Log.e("SendProjectScreen", errorLogMessage)
                     }
                 },
                 modifier = Modifier.fillMaxWidth(0.5f)
@@ -118,7 +155,12 @@ fun SendProjectScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { videoPickerLauncher.launch("video/*") },
+                onClick = {
+                    val logMessage = "Botão 'Selecionar Vídeo' clicado"
+                    logMessages = logMessages + logMessage
+                    Log.d("SendProjectScreen", logMessage)
+                    videoPickerLauncher.launch("video/*")
+                },
                 modifier = Modifier.fillMaxWidth(0.5f)
             ) {
                 Text(text = "Selecionar Vídeo")
@@ -131,12 +173,50 @@ fun SendProjectScreen(
 
             uploadStatus?.let {
                 Text(text = it)
-                videoLink = it
             }
 
             uploadError?.let {
                 Text(text = it)
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Column {
+                Text("Logs:")
+                logMessages.forEach { logMessage ->
+                    Text(text = logMessage)
+                }
+            }
         }
     }
+}
+
+fun getFileFromUri(context: Context, uri: Uri): File? {
+    val contentResolver = context.contentResolver
+    val fileName = getFileName(contentResolver, uri)
+    val file = File(context.cacheDir, fileName)
+    try {
+        val inputStream = contentResolver.openInputStream(uri) ?: return null
+        val outputStream = FileOutputStream(file)
+        inputStream.use { input ->
+            outputStream.use { output ->
+                input.copyTo(output)
+            }
+        }
+        return file
+    } catch (e: Exception) {
+        Log.e("SendProjectScreen", "Erro ao converter URI para arquivo: ${e.message}")
+        return null
+    }
+}
+
+fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
+    var name = ""
+    val returnCursor = contentResolver.query(uri, null, null, null, null)
+    returnCursor?.use {
+        val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        it.moveToFirst()
+        name = it.getString(nameIndex)
+    }
+    return name
 }
