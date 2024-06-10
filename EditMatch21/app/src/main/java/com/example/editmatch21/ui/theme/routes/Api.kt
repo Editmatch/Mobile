@@ -3,6 +3,7 @@ package com.example.editmatch21.ui.theme.routes
 import com.example.editmatch21.ui.theme.entities.ClientRegister
 import com.example.editmatch21.ui.theme.entities.EditorRegister
 import com.example.editmatch21.ui.theme.entities.Editores
+import com.example.editmatch21.ui.theme.entities.OrderDetailsClient
 import com.example.editmatch21.ui.theme.entities.OrderDetailsEditor
 import com.example.editmatch21.ui.theme.entities.OrderEditor
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
@@ -38,6 +39,9 @@ interface Api {
 
     @POST("orders")
     suspend fun sendProjectData(@Body data: ProjectData): Response<Void>
+
+    @GET("orders/{id}")
+    suspend fun getOrderById(@Path("id") id:Int): Response<OrderDetailsClient>
 
     @GET("editores/{id}")
     suspend fun editorDetail(@Path("id") id: Int): Response<Editores>

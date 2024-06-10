@@ -38,7 +38,8 @@ import com.example.editmatch21.R
 fun CardToProject(
     navController: NavController,
     videoName: String,
-    navigateToDetails: (Any) -> Unit
+    orderId: String,
+    navigateToDetails: (String, String) -> Unit
 ) {
     Surface(
         color = Color.White,
@@ -49,7 +50,7 @@ fun CardToProject(
             .fillMaxWidth()
             .height(100.dp)
             .clickable {
-                navigateToDetails(videoName)
+                navigateToDetails(videoName, orderId)
             }
     ) {
         Row(

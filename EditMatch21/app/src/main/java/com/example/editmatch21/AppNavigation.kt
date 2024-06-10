@@ -55,11 +55,12 @@ fun AppNavigation() {
                 navigateToEditors = { navController.navigate("editores") },
                 navigateToLogin = { navController.navigate("login") },
                 navigateToSend = { navController.navigate("sendProject") },
-                navigateToDetails = { projectName ->
-                    navController.navigate("projectClientDetails/$projectName")
+                navigateToDetails = { projectName, orderId ->
+                    navController.navigate("projectClientDetails/$projectName/$orderId")
                 }
             )
         }
+
 
         composable(
             "sendProject"
@@ -73,19 +74,24 @@ fun AppNavigation() {
             )
         }
 
-        composable("projectClientDetails/{projectName}",
-            arguments = listOf(navArgument("projectName") { type = NavType.StringType })
-        ){
-            backStackEntry ->
+        composable("projectClientDetails/{projectName}/{orderId}",
+            arguments = listOf(
+                navArgument("projectName") { type = NavType.StringType },
+                navArgument("orderId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
             val projectName = backStackEntry.arguments?.getString("projectName") ?: ""
+            val orderID = backStackEntry.arguments?.getString("orderId") ?: ""
             ProjectDetailsClientScreen(
                 projectName = projectName,
+                orderID = orderID,
                 navigateToLogin = { navController.navigate("login") },
                 navigateToSend = { navController.navigate("sendProject") },
                 navigateToEditors = { navController.navigate("editores") },
                 navigateToProjects = { navController.navigate("projects") }
             )
         }
+
 
         composable(
             "projectdetails/{projectName}",

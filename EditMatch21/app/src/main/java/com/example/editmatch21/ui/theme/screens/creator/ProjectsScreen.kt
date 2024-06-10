@@ -28,7 +28,7 @@ import com.example.editmatch21.ui.theme.viewmodels.OrderViewModel
 fun ClientProjectsScreen(
     navigateToEditors: () -> Unit,
     navigateToLogin: () -> Unit,
-    navigateToDetails: (Any?) -> Unit,
+    navigateToDetails: (String, String) -> Unit,
     navigateToSend: () -> Unit,
 ) {
     val viewModel: OrderViewModel = viewModel()
@@ -44,7 +44,7 @@ fun ClientProjectsScreen(
             .background(Color.White)
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -52,7 +52,7 @@ fun ClientProjectsScreen(
         ) {
             // Header
             HeaderToCreator("Projetos",
-                navigateToLogin = {navigateToLogin()},
+                navigateToLogin = { navigateToLogin() },
                 navigateToProjects = { },
                 navigateToEditors = { navigateToEditors() },
                 navigateToSend = { navigateToSend() }
@@ -69,8 +69,9 @@ fun ClientProjectsScreen(
             } else {
                 orders.forEach { order ->
                     val title = order.title ?: "Sem título"
+                    val orderId = order.orderId?.toString() ?: "0"  // Converter para String
 
-                    CardToProject(navController, title, navigateToDetails)
+                    CardToProject(navController, title, orderId, navigateToDetails)
                     LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
                 }
             }
