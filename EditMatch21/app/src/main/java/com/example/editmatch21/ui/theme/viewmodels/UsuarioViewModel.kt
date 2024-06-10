@@ -9,11 +9,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UsuarioViewModel:ViewModel() {
+class UsuarioViewModel: ViewModel() {
     val erroApi = MutableLiveData<String>()
     private val api = RetrofitService.get()
 
     val loginResult = MutableLiveData<Boolean>()
+    val userId = MutableLiveData<String?>()
 
     fun login(usuarioLogin: UsuarioLogin) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -21,6 +22,8 @@ class UsuarioViewModel:ViewModel() {
                 val response = api.post(usuarioLogin)
                 if (response.isSuccessful) {
                     erroApi.postValue("")
+                    val user = response.body()
+                    userId.postValue(user?.userId)
                     loginResult.postValue(true)
                 } else {
                     erroApi.postValue(response.errorBody()?.string())
@@ -32,7 +35,6 @@ class UsuarioViewModel:ViewModel() {
             }
         }
     }
-
 
     fun register(usuarioRegister: UsuarioRegister) {
         CoroutineScope(Dispatchers.IO).launch {

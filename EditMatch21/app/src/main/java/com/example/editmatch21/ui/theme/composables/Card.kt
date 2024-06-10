@@ -133,7 +133,7 @@ fun CardEditor(
     Surface(
         color = Color.White,
         tonalElevation = 6.dp,
-        shape = RoundedCornerShape(8.dp), // Borda redonda com raio de 8.dp
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .size(width = 375.dp, height = 100.dp)
             .padding(3.dp)

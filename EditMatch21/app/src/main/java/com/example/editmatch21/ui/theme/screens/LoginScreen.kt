@@ -1,5 +1,6 @@
 package com.example.editmatch21.ui.theme.screens
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,9 +35,7 @@ fun LoginScreen(
     navigateToRegister: () -> Unit,
     navigateToProject: () -> Unit
 ) {
-    // Cria uma instância da ViewModel
     val viewModel: UsuarioViewModel = viewModel()
-    // Cria variáveis para armazenar o e-mail e a senha
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
 
@@ -50,7 +50,6 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Logo
             LogoImage(
                 painter = painterResource(id = R.mipmap.logo),
                 contentDescription = "Logo",
@@ -91,13 +90,22 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             val loginSuccessful = viewModel.loginResult.observeAsState(initial = false)
+            val userId = viewModel.userId.observeAsState()
 
             ButtonLoginCadastro(onClick = {
                 viewModel.login(UsuarioLogin(email, senha))
             }, texto = "Entrar")
 
             if (loginSuccessful.value) {
-                navigateToProject()
+                userId.value?.let {
+                    val context = LocalContext.current
+                    val sharedPref = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                    with(sharedPref.edit()) {
+                        putString("user_id", it)
+                        apply()
+                    }
+                    navigateToProject()
+                }
             }
         }
     }

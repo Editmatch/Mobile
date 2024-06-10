@@ -89,12 +89,12 @@ fun AppNavigation(){
             "sendProject"
         ){
             SendProjectScreen(
-                projectName = "blabla",
-                navigateToEditProfile = { navController.navigate("profile") },
+                screenName = "blabla",
                 navigateToLogin = { navController.navigate("login") },
-                navigateToProjects = { navController.navigate("projects") },
-                navigateToWorks = { /*TODO*/ }) {
-            }
+                navigateToSend = { navController.navigate("sendProject")},
+                navigateToEditors = { navController.navigate("editores")},
+                navigateToProjects =  { navController.navigate("projects")}
+            )
         }
 
         composable(
@@ -136,6 +136,7 @@ fun AppNavigation(){
 
         composable("editores"){
             EditorsScreen(
+                navigateToProjects = {navController.navigate("projects")},
                 navigateToEditors = { navController.navigate("editores") },
                 navigateToDetails = {},
                 navigateToLogin = {navController.navigate("login")},
