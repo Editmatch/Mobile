@@ -1,7 +1,6 @@
 package com.example.editmatch21
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,7 +25,6 @@ fun AppNavigation(){
     NavHost(navController = navController, startDestination = "login") {
 
         composable("login") {
-            // Aqui está onde você adiciona o LoginScreen
             LoginScreen(
                 navigateToRegister = {
                     navController.navigate("registerSelect")
@@ -38,7 +36,6 @@ fun AppNavigation(){
         }
 
         composable("registerSelect") {
-            // Tela de seleção de registro
             RegisterSelectScreen(
                 navigateToVideoCreator = {
                     navController.navigate("registerVideoCreator")
@@ -127,6 +124,18 @@ fun AppNavigation(){
                 navigateToProjects = {navController.navigate("projects")},
                 navigateToWorks = {navController.navigate("works")},
                 navigateToCarteira = {navController.navigate("carteira")}
+            )
+        }
+
+        composable("registerVideoCreator"){
+            RegisterVideoCreatorScreen(
+                navigateToLogin = { navController.navigate("login") }
+            )
+        }
+
+        composable("registerVideoEditor"){
+            RegisterVideoEditorScreen(
+                navigateToLogin = { navController.navigate("login") }
             )
         }
     }
