@@ -138,19 +138,19 @@ fun ProfileHeaderSection(
                 .border(2.dp, Color.Gray, CircleShape)
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = userName, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = Color.Red)
+        Text(text = userName, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = Color.Black)
         Spacer(modifier = Modifier.height(8.dp))
         Row(
             horizontalArrangement = Arrangement.spacedBy(32.dp),
             modifier = Modifier.padding(vertical = 8.dp)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "0", fontWeight = FontWeight.Bold, color = Color.Red)
-                Text(text = "Vídeos editados", fontSize = 12.sp, color = Color.Red)
+                Text(text = "0", fontWeight = FontWeight.Bold, color = Color.Black)
+                Text(text = "Vídeos editados", fontSize = 12.sp, color = Color.Black)
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "$valorHora", fontWeight = FontWeight.Bold, color = Color.Red)
-                Text(text = "Valor hora", fontSize = 12.sp, color = Color.Red)
+                Text(text = "$valorHora", fontWeight = FontWeight.Bold, color = Color.Black)
+                Text(text = "Valor hora", fontSize = 12.sp, color = Color.Black)
             }
         }
     }
