@@ -19,14 +19,14 @@ import com.example.editmatch21.ui.theme.composables.LinhaDivider
 import com.example.editmatch21.ui.theme.composables.CardToProject
 import com.example.editmatch21.ui.theme.composables.HeaderToCreator
 import com.example.editmatch21.ui.theme.viewmodels.EditoresViewModel
-
 @Composable
 fun EditorsScreen(
-    navigateToEditors: () -> Unit,
     navigateToProjects: () -> Unit,
+    navigateToEditors: () -> Unit,
+    navigateToDetails: () -> Unit,
     navigateToLogin: () -> Unit,
-    navigateToDetails: (Any?) -> Unit,
     navigateToSend: () -> Unit,
+    navigateToProfileEditorScreen: (Int) -> Unit
 ) {
     val viewModel: EditoresViewModel = viewModel()
 
@@ -54,10 +54,10 @@ fun EditorsScreen(
             // Header
             HeaderToCreator(
                 "Editores",
-                navigateToLogin = { navigateToLogin() },
-                navigateToProjects = { navigateToProjects() },
-                navigateToEditors = { navigateToEditors() },
-                navigateToSend = { navigateToSend() }
+                navigateToLogin = navigateToLogin,
+                navigateToProjects = navigateToProjects,
+                navigateToEditors = navigateToEditors,
+                navigateToSend = navigateToSend
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -85,7 +85,8 @@ fun EditorsScreen(
                 else -> {
                     editores.forEach { editor ->
                         val nome = editor.nome
-                        CardEditor(navController, nome, navigateToDetails)
+                        val id = editor.id // Supondo que o editor tem um campo 'id'
+                        CardEditor(navController, id.toInt(), nome, navigateToProfileEditorScreen)
                         LinhaDivider(
                             color = Color.LightGray,
                             thickness = 1.dp,
@@ -97,3 +98,4 @@ fun EditorsScreen(
         }
     }
 }
+

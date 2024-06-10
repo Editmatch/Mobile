@@ -14,6 +14,7 @@ class EditoresViewModel : ViewModel() {
     private val api = RetrofitService.get()
 
     val editores = MutableLiveData<List<Editores>>()
+    val editor = MutableLiveData<Editores>();
     val isLoading = MutableLiveData<Boolean>()
 
     fun getEditores() {
@@ -25,6 +26,29 @@ class EditoresViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     Log.d("EditoresViewModel", "Resposta da API recebida com sucesso")
                     editores.postValue(response.body())
+                } else {
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("EditoresViewModel", "Erro na resposta da API: $errorBody")
+                    erroApi.postValue(errorBody)
+                }
+            } catch (e: Exception) {
+                Log.e("EditoresViewModel", "Exceção na chamada da API: ${e.message}", e)
+                erroApi.postValue(e.message)
+            } finally {
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun getEditorById(id: Int) {
+        isLoading.postValue(true)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                Log.d("EditoresViewModel", "Chamando a API")
+                val response = api.editorDetail(id)
+                if (response.isSuccessful) {
+                    Log.d("EditoresViewModel", "Resposta da API recebida com sucesso")
+                    editor.postValue(response.body());
                 } else {
                     val errorBody = response.errorBody()?.string()
                     Log.e("EditoresViewModel", "Erro na resposta da API: $errorBody")

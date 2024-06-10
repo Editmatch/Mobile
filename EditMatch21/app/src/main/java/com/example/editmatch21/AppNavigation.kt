@@ -9,7 +9,9 @@ import androidx.navigation.navArgument
 import com.example.editmatch21.ui.theme.screens.LoginScreen
 import com.example.editmatch21.ui.theme.screens.RegisterSelectScreen
 import com.example.editmatch21.ui.theme.screens.creator.ClientProjectsScreen
+import com.example.editmatch21.ui.theme.screens.creator.ContratarEditor
 import com.example.editmatch21.ui.theme.screens.creator.EditorsScreen
+import com.example.editmatch21.ui.theme.screens.creator.ProfileEditorScreen
 import com.example.editmatch21.ui.theme.screens.creator.RegisterVideoCreatorScreen
 import com.example.editmatch21.ui.theme.screens.creator.SendProjectScreen
 import com.example.editmatch21.ui.theme.screens.editor.Carteira
@@ -19,7 +21,7 @@ import com.example.editmatch21.ui.theme.screens.editor.RegisterVideoEditorScreen
 import com.example.editmatch21.ui.theme.screens.editor.WorkScreen
 
 @Composable
-fun AppNavigation(){
+fun AppNavigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "login") {
@@ -49,7 +51,7 @@ fun AppNavigation(){
 
         composable("projects") {
             ClientProjectsScreen(
-                navigateToEditors = { navController.navigate("editores")},
+                navigateToEditors = { navController.navigate("editores") },
                 navigateToLogin = { navController.navigate("login") },
                 navigateToSend = { navController.navigate("sendProject") },
                 navigateToDetails = { projectName ->
@@ -60,29 +62,29 @@ fun AppNavigation(){
 
         composable(
             "sendProject"
-        ){
+        ) {
             SendProjectScreen(
                 screenName = "blabla",
                 navigateToLogin = { navController.navigate("login") },
-                navigateToSend = { navController.navigate("sendProject")},
-                navigateToEditors = { navController.navigate("editores")},
-                navigateToProjects =  { navController.navigate("projects")}
+                navigateToSend = { navController.navigate("sendProject") },
+                navigateToEditors = { navController.navigate("editores") },
+                navigateToProjects = { navController.navigate("projects") }
             )
         }
 
         composable(
             "projectdetails/{projectName}",
             arguments = listOf(navArgument("projectName") { type = NavType.StringType })
-        ){backStackEntry ->
+        ) { backStackEntry ->
             val projectName = backStackEntry.arguments?.getString("projectName") ?: ""
 
             ProjectDetailsScreen(
                 projectName = projectName,
                 navigateToEditProfile = { navController.navigate("profile") },
                 navigateToLogin = { navController.navigate("login") },
-                navigateToProjects = {navController.navigate("projects")},
-                navigateToWorks = {navController.navigate("works")},
-                navigateToCarteira = {navController.navigate("carteira")}
+                navigateToProjects = { navController.navigate("projects") },
+                navigateToWorks = { navController.navigate("works") },
+                navigateToCarteira = { navController.navigate("carteira") }
             )
         }
 
@@ -90,50 +92,79 @@ fun AppNavigation(){
             ProfileScreen(
                 navigateToEditProfile = { /*TODO*/ },
                 navigateToLogin = { navController.navigate("login") },
-                navigateToProjects = {navController.navigate("projects")},
-                navigateToWorks = {navController.navigate("works")},
-                navigateToCarteira = {navController.navigate("carteira")}
+                navigateToProjects = { navController.navigate("projects") },
+                navigateToWorks = { navController.navigate("works") },
+                navigateToCarteira = { navController.navigate("carteira") }
             )
         }
 
-        composable("works"){
+        composable("works") {
             WorkScreen(
                 navigateToProfile = { navController.navigate("profile") },
                 navigateToDetails = {},
                 navigateToLogin = { navController.navigate("login") },
-                navigateToProjects = {navController.navigate("projects")},
-                navigateToWorks = {navController.navigate("works")},
-                navigateToCarteira = {navController.navigate("carteira")}
+                navigateToProjects = { navController.navigate("projects") },
+                navigateToWorks = { navController.navigate("works") },
+                navigateToCarteira = { navController.navigate("carteira") }
             )
         }
 
-        composable("editores"){
+        composable("editores") {
             EditorsScreen(
-                navigateToProjects = {navController.navigate("projects")},
+                navigateToProjects = { navController.navigate("projects") },
                 navigateToEditors = { navController.navigate("editores") },
                 navigateToDetails = {},
-                navigateToLogin = {navController.navigate("login")},
-                navigateToSend = {navController.navigate("sendProject")},
+                navigateToLogin = { navController.navigate("login") },
+                navigateToSend = { navController.navigate("sendProject") },
+                navigateToProfileEditorScreen = { editorId ->
+                    navController.navigate("profileEditor/$editorId")
+                }
             )
         }
 
-        composable("carteira"){
+
+        composable("profileEditor/{editorId}") { backStackEntry ->
+            val editorId =
+                backStackEntry.arguments?.getString("editorId")?.toInt() ?: return@composable
+            ProfileEditorScreen(
+                editorId = editorId,
+                navigateToLogin = { navController.navigate("login") },
+                navigateToProjects = { navController.navigate("projects") },
+                navigateToEditors = { navController.navigate("editores") },
+                navigateToSend =  { navController.navigate("sendProject") },
+                navigateToHirePage = {  navController.navigate("contratar")}
+            )
+        }
+
+        composable("contratar")
+        {
+            ContratarEditor(
+                screenName = "Contratar editor",
+                navigateToLogin = { navController.navigate("login") },
+                navigateToSend = { navController.navigate("sendProject") },
+                navigateToEditors = { navController.navigate("editores") },
+                navigateToProjects = { navController.navigate("projects") },
+                navigateToHirePage = { navController.navigate("contratar") }
+            )
+        }
+
+        composable("carteira") {
             Carteira(
                 navigateToEditProfile = { navController.navigate("profile") },
                 navigateToLogin = { navController.navigate("login") },
-                navigateToProjects = {navController.navigate("projects")},
-                navigateToWorks = {navController.navigate("works")},
-                navigateToCarteira = {navController.navigate("carteira")}
+                navigateToProjects = { navController.navigate("projects") },
+                navigateToWorks = { navController.navigate("works") },
+                navigateToCarteira = { navController.navigate("carteira") }
             )
         }
 
-        composable("registerVideoCreator"){
+        composable("registerVideoCreator") {
             RegisterVideoCreatorScreen(
                 navigateToLogin = { navController.navigate("login") }
             )
         }
 
-        composable("registerVideoEditor"){
+        composable("registerVideoEditor") {
             RegisterVideoEditorScreen(
                 navigateToLogin = { navController.navigate("login") }
             )

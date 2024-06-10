@@ -33,6 +33,9 @@ interface Api {
     @POST("orders")
     suspend fun sendProjectData(@Body data: ProjectData): Response<Void>
 
+    @GET("editores/{id}")
+    suspend fun editorDetail(@Path("id") id: Int): Response<Editores>
+
     @GET("orders/disponivel")
     suspend fun orders(): Response<List<OrderEditor>>
 
