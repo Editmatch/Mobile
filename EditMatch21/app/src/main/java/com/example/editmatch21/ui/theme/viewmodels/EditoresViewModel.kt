@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.editmatch21.ui.theme.entities.EditorRegister
 import com.example.editmatch21.ui.theme.entities.Editores
 import com.example.editmatch21.ui.theme.retrofit.RetrofitService
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,9 +44,10 @@ class EditoresViewModel : ViewModel() {
     fun registerEditor(editorRegister: EditorRegister) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                Log.d("RegisterVideoEditorScreen", "Dados enviados: $editorRegister")
+                val jsonEditorRegister = Gson().toJson(editorRegister)
+                Log.d("RegisterVideoEditorScreen", "Dados enviados: $jsonEditorRegister")
                 val response = api.registerEditor(editorRegister)
-                Log.d("RegisterVideoEditorScreen", "Resposta da API: $response")
+                Log.d("RegisterVideoEditorScreen", "Resposta da API: ${response.code()} ${response.message()} ${response.errorBody()?.string()}")
                 if (response.isSuccessful) {
                     erroApi.postValue("")
                 } else {

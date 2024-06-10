@@ -1,5 +1,6 @@
 package com.example.editmatch21.ui.theme.routes
 
+import com.example.editmatch21.ui.theme.entities.ClientRegister
 import com.example.editmatch21.ui.theme.entities.EditorRegister
 import com.example.editmatch21.ui.theme.entities.Editores
 import com.example.editmatch21.ui.theme.entities.OrderDetailsEditor
@@ -18,8 +19,13 @@ interface Api {
     @GET("usuarios/listar-editor")
     suspend fun listarEditores(): Response<List<Editores>>
 
+    @Headers("Content-Type: application/json")
     @POST("editores")
-    suspend fun registerEditor(@Body editor: EditorRegister): Response<Void>
+    suspend fun registerEditor(@Body editor: EditorRegister): Response<EditorRegister>
+
+    @Headers("Content-Type: application/json")
+    @POST("clientes")
+    suspend fun registerClient(@Body client: ClientRegister): Response<ClientRegister>
 
     @Multipart
     @POST("s3/storage")
