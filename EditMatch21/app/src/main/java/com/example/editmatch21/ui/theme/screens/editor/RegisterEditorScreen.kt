@@ -1,5 +1,6 @@
 package com.example.editmatch21.ui.theme.screens.editor
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,10 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.editmatch21.ui.theme.composables.ButtonLoginCadastro
 import com.example.editmatch21.ui.theme.composables.InfoInput
 import com.example.editmatch21.ui.theme.composables.Redirecionamento
 import com.example.editmatch21.ui.theme.composables.TextoDescritivo
+import com.example.editmatch21.ui.theme.entities.EditorRegister
+import com.example.editmatch21.ui.theme.viewmodels.EditoresViewModel
 
 @Composable
 fun RegisterVideoEditorScreen(
@@ -32,6 +36,8 @@ fun RegisterVideoEditorScreen(
     val chavePix = remember { mutableStateOf("") }
     val valorHora = remember { mutableStateOf(0.0) }
     val habilidades = remember { mutableStateListOf<String>() }
+    val viewModel: EditoresViewModel = viewModel()
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -117,7 +123,22 @@ fun RegisterVideoEditorScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            ButtonLoginCadastro(onClick = { }, texto = "Cadastrar")
+            ButtonLoginCadastro(onClick = {
+                val skillsFormat = habilidades.joinToString(", ")
+
+                val newEditor = EditorRegister(
+                    name = nome.value,
+                    last_name = "",
+                    email = email.value,
+                    password = senha.value,
+                    chavePix = chavePix.value,
+                    skills = skillsFormat,
+                    valorHora = valorHora.value,
+                    isEditor = true
+                )
+                var response = viewModel.registerEditor(newEditor)
+                Log.e("RegisterVideoEditorScreen", response.toString())
+            }, texto = "Cadastrar")
         }
     }
 }

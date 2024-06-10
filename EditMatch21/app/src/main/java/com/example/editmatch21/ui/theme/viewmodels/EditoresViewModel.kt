@@ -3,6 +3,7 @@ package com.example.editmatch21.ui.theme.viewmodels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.editmatch21.ui.theme.entities.EditorRegister
 import com.example.editmatch21.ui.theme.entities.Editores
 import com.example.editmatch21.ui.theme.retrofit.RetrofitService
 import kotlinx.coroutines.CoroutineScope
@@ -38,4 +39,23 @@ class EditoresViewModel : ViewModel() {
             }
         }
     }
+
+    fun registerEditor(editorRegister: EditorRegister) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                Log.d("RegisterVideoEditorScreen", "Dados enviados: $editorRegister")
+                val response = api.registerEditor(editorRegister)
+                Log.d("RegisterVideoEditorScreen", "Resposta da API: $response")
+                if (response.isSuccessful) {
+                    erroApi.postValue("")
+                } else {
+                    erroApi.postValue(response.errorBody()?.string())
+                }
+            } catch (e: Exception) {
+                Log.e("RegisterVideoEditorScreen", "Exceção capturada: $e")
+                erroApi.postValue(e.message)
+            }
+        }
+    }
+
 }

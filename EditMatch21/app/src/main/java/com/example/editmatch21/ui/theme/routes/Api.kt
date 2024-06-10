@@ -1,10 +1,10 @@
 package com.example.editmatch21.ui.theme.routes
 
+import com.example.editmatch21.ui.theme.entities.EditorRegister
 import com.example.editmatch21.ui.theme.entities.Editores
 import com.example.editmatch21.ui.theme.entities.OrderDetailsEditor
 import com.example.editmatch21.ui.theme.entities.OrderEditor
 import com.example.editmatch21.ui.theme.entities.UsuarioLogin
-import com.example.editmatch21.ui.theme.entities.UsuarioRegister
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -15,11 +15,11 @@ interface Api {
     @POST("usuarios/login")
     suspend fun post(@Body login: UsuarioLogin): Response<UsuarioLogin>
 
-    @POST("usuarios/cadastro")
-    suspend fun register(@Body login: UsuarioRegister): Response<UsuarioRegister>
-
     @GET("usuarios/listar-editor")
     suspend fun listarEditores(): Response<List<Editores>>
+
+    @POST("editores")
+    suspend fun registerEditor(@Body editor: EditorRegister): Response<Void>
 
     @Multipart
     @POST("s3/storage")
