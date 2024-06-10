@@ -23,33 +23,11 @@ import com.example.editmatch21.ui.theme.composables.TextoDescritivo
 @Composable
 fun RegisterVideoCreatorScreen(
     navigateToLogin: () -> Unit,
-    criadorViewModel: CriadorViewModel
 ) {
     val nome = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val senha = remember { mutableStateOf("") }
     val confirmarSenha = remember { mutableStateOf("") }
-
-    val editorCriado = criadorViewModel.criadorCriado.observeAsState()
-
-    // Função para lidar com o clique do botão de cadastro
-    val onClickCadastrar = {
-        // verificando se a senha é igual a do confirmar
-        if( senha.value == confirmarSenha.value){
-            // Aqui você pode obter os valores dos campos de entrada e criar um novo criador de vídeo
-            // Passar esses valores para a função criar do ViewModel
-            val novoCriador = Criador(
-                id = null,
-                nome = nome.value,
-                email = email.value,
-                password = senha.value
-            )
-            criadorViewModel.criar(novoCriador)
-            navigateToLogin()
-        } else{
-            // não faça nada
-        }
-    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -108,7 +86,7 @@ fun RegisterVideoCreatorScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            ButtonLoginCadastro(onClick = { onClickCadastrar() }, texto = "Cadastrar")
+            ButtonLoginCadastro(onClick = { }, texto = "Cadastrar")
         }
     }
 }

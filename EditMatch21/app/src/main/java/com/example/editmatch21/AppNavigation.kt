@@ -49,26 +49,6 @@ fun AppNavigation(){
             )
         }
 
-        composable("registerVideoCreator") {
-            val editorViewModel = remember { EditorViewModel() }
-            // Tela de cadastro de criador de vídeo
-            RegisterVideoCreatorScreen(
-                navigateToLogin = {
-                    navController.navigate("login")
-                },
-                criadorViewModel = remember { CriadorViewModel() }
-            )
-        }
-
-        composable("registerVideoEditor") {
-            // Tela de cadastro de editor de vídeo
-            RegisterVideoEditorScreen(
-                navigateToLogin = {
-                    navController.navigate("login")
-                },
-                editorViewModel = remember { EditorViewModel() }
-            )
-        }
 
         composable("projects") {
             ClientProjectsScreen(
