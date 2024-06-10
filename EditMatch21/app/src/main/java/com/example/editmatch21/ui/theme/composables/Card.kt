@@ -1,5 +1,6 @@
 package com.example.editmatch21.ui.theme.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,9 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,48 +32,44 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.editmatch21.R
-
-@Composable
-fun CardEditor(
-
-) {
-
-}
-
 @Composable
 fun CardToProject(
     navController: NavController,
     videoName: String,
-    navigateToDetails: (String) -> Unit
+    navigateToDetails: (Any) -> Unit
 ) {
     Surface(
         color = Color.White,
         tonalElevation = 6.dp,
-        shape = RoundedCornerShape(8.dp), // Borda redonda com raio de 8.dp
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .size(width = 375.dp, height = 100.dp)
             .padding(3.dp)
-            .clickable { navigateToDetails(videoName) }
+            .fillMaxWidth()
+            .height(100.dp)
+            .clickable {
+                navigateToDetails(videoName)
+            }
     ) {
-        Row {
-            Column {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_video_settings_24),
-                    contentDescription = "Video",
-                    modifier = Modifier.size(90.dp)
-                )
-            }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_video_settings_24),
+                contentDescription = "Video",
+                modifier = Modifier.size(90.dp)
+            )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.width(16.dp))
 
-            Column {
-                Text(
-                    text = videoName,
-                    modifier = Modifier.padding(16.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
+            Text(
+                text = videoName,
+                modifier = Modifier.padding(16.dp),
+                textAlign = TextAlign.Start,
+                style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
@@ -130,6 +130,7 @@ fun CardEditor(
     navController: NavController,
     editorId: Int,
     editorName: String,
+    editorFoto: String?,
     navigateToProfileEditorScreen: (Int) -> Unit
 ) {
     Card(
@@ -140,7 +141,24 @@ fun CardEditor(
                 navigateToProfileEditorScreen(editorId)
             }
     ) {
-        Text(text = editorName)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Image(
+                painter = if (editorFoto.isNullOrEmpty()) painterResource(id = R.drawable.baseline_account_circle_24) else rememberImagePainter(editorFoto),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = editorName,
+                fontSize = 18.sp,
+                color = Color.Black
+            )
+        }
     }
 }
 

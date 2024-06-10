@@ -62,12 +62,12 @@ fun ProjectsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            orders.forEach { order ->
-                CardToProject(navController, order.title) {
-                    navigateToDetails(order)
-                }
-                LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            }
+//            orders.forEach { order ->
+//                CardToProject(navController, order.title, order.nome, order.link, order.) {
+//                    navigateToDetails(order)
+//                }
+//                LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+//            }
         }
     }
 }

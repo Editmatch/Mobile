@@ -12,6 +12,7 @@ import com.example.editmatch21.ui.theme.screens.creator.ClientProjectsScreen
 import com.example.editmatch21.ui.theme.screens.creator.ContratarEditor
 import com.example.editmatch21.ui.theme.screens.creator.EditorsScreen
 import com.example.editmatch21.ui.theme.screens.creator.ProfileEditorScreen
+import com.example.editmatch21.ui.theme.screens.creator.ProjectDetailsClientScreen
 import com.example.editmatch21.ui.theme.screens.creator.RegisterVideoCreatorScreen
 import com.example.editmatch21.ui.theme.screens.creator.SendProjectScreen
 import com.example.editmatch21.ui.theme.screens.editor.Carteira
@@ -55,7 +56,7 @@ fun AppNavigation() {
                 navigateToLogin = { navController.navigate("login") },
                 navigateToSend = { navController.navigate("sendProject") },
                 navigateToDetails = { projectName ->
-                    navController.navigate("projectdetails/$projectName")
+                    navController.navigate("projectClientDetails/$projectName")
                 }
             )
         }
@@ -65,6 +66,20 @@ fun AppNavigation() {
         ) {
             SendProjectScreen(
                 screenName = "blabla",
+                navigateToLogin = { navController.navigate("login") },
+                navigateToSend = { navController.navigate("sendProject") },
+                navigateToEditors = { navController.navigate("editores") },
+                navigateToProjects = { navController.navigate("projects") }
+            )
+        }
+
+        composable("projectClientDetails/{projectName}",
+            arguments = listOf(navArgument("projectName") { type = NavType.StringType })
+        ){
+            backStackEntry ->
+            val projectName = backStackEntry.arguments?.getString("projectName") ?: ""
+            ProjectDetailsClientScreen(
+                projectName = projectName,
                 navigateToLogin = { navController.navigate("login") },
                 navigateToSend = { navController.navigate("sendProject") },
                 navigateToEditors = { navController.navigate("editores") },

@@ -51,11 +51,11 @@ fun WorkScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CardToProject(navController, "Memes do neymar", navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Streming GTA5",navigateToDetails)
-            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
-            CardToProject(navController, "Maquiagem TikTok", navigateToDetails)
+//            CardToProject(navController, "Memes do neymar", navigateToDetails)
+//            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+//            CardToProject(navController, "Streming GTA5",navigateToDetails)
+//            LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+//            CardToProject(navController, "Maquiagem TikTok", navigateToDetails)
         }
     }
 }

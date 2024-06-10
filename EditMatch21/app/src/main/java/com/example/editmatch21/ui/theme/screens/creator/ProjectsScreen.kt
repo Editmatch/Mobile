@@ -68,8 +68,8 @@ fun ClientProjectsScreen(
                 )
             } else {
                 orders.forEach { order ->
-                    // Verifica se o título do pedido é nulo
                     val title = order.title ?: "Sem título"
+
                     CardToProject(navController, title, navigateToDetails)
                     LinhaDivider(color = Color.LightGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
                 }

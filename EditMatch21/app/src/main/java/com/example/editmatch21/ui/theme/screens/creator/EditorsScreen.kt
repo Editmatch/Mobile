@@ -85,8 +85,9 @@ fun EditorsScreen(
                 else -> {
                     editores.forEach { editor ->
                         val nome = editor.nome
-                        val id = editor.id // Supondo que o editor tem um campo 'id'
-                        CardEditor(navController, id.toInt(), nome, navigateToProfileEditorScreen)
+                        val foto = editor.photoProfileLink
+                        val id = editor.id
+                        CardEditor(navController, id.toInt(), nome, foto, navigateToProfileEditorScreen)
                         LinhaDivider(
                             color = Color.LightGray,
                             thickness = 1.dp,

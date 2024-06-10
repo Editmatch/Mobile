@@ -18,17 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.editmatch21.ui.theme.composables.Header
+import com.example.editmatch21.ui.theme.composables.HeaderToCreator
 import com.example.editmatch21.ui.theme.composables.ProjectInfoField
 import com.example.editmatch21.ui.theme.composables.VideoFilePicker
 
 @Composable
-fun ProjectDetailsScreen(
+fun ProjectDetailsClientScreen(
     projectName: String,
-    navigateToEditProfile: () -> Unit,
     navigateToLogin:() -> Unit,
-    navigateToProjects: () -> Unit,
-    navigateToWorks: () -> Unit,
-    navigateToCarteira: () -> Unit,
+    navigateToSend: () -> Unit,
+    navigateToEditors: () -> Unit,
+    navigateToProjects: () -> Unit
 ) {
     val navController = rememberNavController()
     Column(
@@ -36,13 +36,12 @@ fun ProjectDetailsScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Header(
+        HeaderToCreator(
             screenName = "Detalhes do projeto",
             navigateToLogin = navigateToLogin,
-            navigateToProfile = navigateToEditProfile,
             navigateToProjects = navigateToProjects,
-            navigateToWorks = navigateToWorks,
-            navigateToCarteira = navigateToCarteira
+            navigateToEditors = navigateToEditors,
+            navigateToSend = navigateToSend
         )
 
         Spacer(modifier = Modifier.height(26.dp))
